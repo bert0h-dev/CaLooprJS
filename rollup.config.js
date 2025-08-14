@@ -28,6 +28,7 @@ export default {
       chunkFileNames: '[name]-[hash].js',
     },
   ],
+  external: isProduction ? ['preact', 'preact/hooks', 'preact/compat'] : [],
   plugins: [
     alias({
       entries: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
@@ -38,7 +39,23 @@ export default {
       dedupe: ['preact'],
     }),
     copy({
-      targets: [{ src: 'src/index.html', dest: 'dist' }],
+      targets: [
+        {
+          src: 'src/index.html',
+          dest: 'dist',
+          transform: contents => {
+            let html = contents.toString();
+            // Solo agregar livereload en desarrollo
+            if (!isProduction) {
+              html = html.replace(
+                '</body>',
+                '  <script src="http://localhost:35729/livereload.js?snipver=1"></script>\n  </body>'
+              );
+            }
+            return html;
+          },
+        },
+      ],
     }),
     postcss({
       plugins: [postcssImport()],
@@ -58,11 +75,17 @@ export default {
         contentBase: 'dist',
         port: 3000,
         host: 'localhost',
+        open: true,
         headers: {
           'Access-Control-Allow-Origin': '*',
         },
       }),
-    !isProduction && livereload('dist'),
+    !isProduction &&
+      livereload({
+        watch: 'dist',
+        verbose: true,
+        port: 35729,
+      }),
 
     // Plugin solo para producción
     isProduction &&
