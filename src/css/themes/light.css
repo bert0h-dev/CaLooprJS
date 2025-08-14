@@ -1,0 +1,30 @@
+[data-theme='light'],
+:root {
+  /* === SUPERFICIE === */
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #f8fafc;
+  --color-surface-tertiary: #f1f5f9;
+  --color-surface-accent: #e2e8f0;
+
+  /* === TEXTO === */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-text-inverse: #ffffff;
+
+  /* === BORDES === */
+  --color-border-primary: #e2e8f0;
+  --color-border-secondary: #cbd5e1;
+  --color-border-focus: var(--color-primary-500);
+
+  /* === ICONOS === */
+  --color-icon-primary: #475569;
+  --color-icon-secondary: #64748b;
+  --color-icon-muted: #94a3b8;
+
+  /* === CONTAINER === */
+  --color-container-bg: #ffffff;
+  --color-container-header-bg: #f8fafc;
+  --color-container-border: #e2e8f0;
+}
