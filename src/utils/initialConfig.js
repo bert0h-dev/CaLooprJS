@@ -6,7 +6,11 @@ export const appConfig = {
     weekendsVisible: true,
     showWeekNumbers: false,
     viewToolbar: {
-      start: [{ action: 'today' }],
+      start: [
+        { action: 'prevMonth' },
+        { action: 'today' },
+        { action: 'nextMonth' },
+      ],
       center: [{ action: 'title' }],
       end: [{ action: 'month' }],
     },
@@ -27,7 +31,6 @@ export const appConfig = {
   // Configuración de los eventos
   events: {
     activeEvents: [],
-    selectedEvents: [],
   },
 
   // Configuración de la interfaz

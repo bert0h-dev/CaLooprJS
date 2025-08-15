@@ -12,4 +12,16 @@ export const ToolbarOptions = {
     buttonClass: '',
     buttonText: 'Mes',
   },
+  prevMonth: {
+    buttonClick: 'prevMonth',
+    buttonTitle: 'Mes anterior',
+    buttonClass: '',
+    buttonText: '←',
+  },
+  nextMonth: {
+    buttonClick: 'nextMonth',
+    buttonTitle: 'Mes siguiente',
+    buttonClass: '',
+    buttonText: '→',
+  },
 };
