@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useCalendarViewContext } from '@/context/CalendarViewContext.jsx';
 import { ToolbarOptions } from '@/utils/toolbarOptions.js';
+import { useCalendarHelpers } from '@/hooks/useCalendarHelpers.js';
 
 export const ToolbarSection = ({ section }) => {
   // Se guardan los componentes que se configuren
@@ -9,22 +10,25 @@ export const ToolbarSection = ({ section }) => {
   // Se accede al contexto del calendario
   const { currentDate, calendar, dateController, actions, localization } =
     useCalendarViewContext();
-
+  // Se obtiene el helper para el formatter
+  const { formatDate } = useCalendarHelpers();
   // Formateo de la session de view
   let formattedConfig = calendar.viewFormats[calendar.activeView] || {
     month: 'long',
   };
-  const formateador = new Intl.DateTimeFormat(
-    localization.locale,
-    formattedConfig
-  );
-  const formattedDate = formateador.format(currentDate);
+  const formattedDate = formatDate(currentDate, formattedConfig);
 
   // Se crea handle de actions
   const handleGoToAction = action => {
     switch (action) {
       case 'today':
         dateController.goToToday();
+        break;
+      case 'prevMonth':
+        dateController.navigateMonth(-1);
+        break;
+      case 'nextMonth':
+        dateController.navigateMonth(1);
         break;
       case 'month':
         actions.view.showMonthView();
