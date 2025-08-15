@@ -31,25 +31,42 @@ export const CalendarViewProvider = ({ children, initialConfig = {} }) => {
   // Controlador de dates
   const newDate = new Date();
   const [currentDate, dateController] = useCalendarDate(newDate);
-
   // Acciones del calendario mandandole el reducer
   const actions = useCalendarActions(dispatch);
+
+  // Memoizicacion del calendario
+  const calendarState = useMemo(() => {
+    return {
+      calendar: state.calendar,
+      currentDate,
+      dateController,
+    };
+  }, [state.calendar, currentDate, dateController]);
+
+  // Memozicacion de los eventos
+  const eventsState = useMemo(() => {
+    return {
+      events: state.events,
+    };
+  }, [state.events]);
+
+  // Memozicacion de la UI
+  const uiState = useMemo(() => {
+    return {
+      ui: state.ui,
+      localization: state.localization,
+    };
+  }, [state.ui, state.localization]);
 
   // Valores del contexto con memoizacion
   const contextValue = useMemo(() => {
     return {
-      // Estado actual del calendario
-      ...state,
-      // Fecha actual
-      currentDate,
-      // Controlador de fechas
-      dateController,
-      // Acciones del calendario
-      actions: {
-        ...actions,
-      },
+      ...calendarState,
+      ...eventsState,
+      ...uiState,
+      actions,
     };
-  }, [state, currentDate, dateController, actions]);
+  }, [calendarState, eventsState, uiState, actions]);
 
   return (
     <CalendarViewContext.Provider value={contextValue}>
