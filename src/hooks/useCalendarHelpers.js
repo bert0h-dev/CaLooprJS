@@ -1,5 +1,9 @@
 import { useMemo } from 'preact/hooks';
 import { useCalendarViewContext } from '@/context/CalendarViewContext.jsx';
+import { startMonth, endMonth, isCurrentMonth } from '@/loopr/common/months';
+import { startWeek, endWeek } from '@/loopr/common/weeks';
+import { isCurrentToday, isWeekendDay } from '@/loopr/common/days';
+import { getIntervalDays } from '@/loopr/utils/intervalUtils';
 
 // Hook que se utiliza como helper para el calculo de los dias
 export const useCalendarHelpers = () => {
@@ -9,24 +13,26 @@ export const useCalendarHelpers = () => {
     () => ({
       // Generar días del mes
       getMonthDays: (date = currentDate) => {
-        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        // Se obtiene el primer y ultimo dia del mes
+        const monthStart = startMonth(date);
+        const monthEnd = endMonth(date);
 
-        const startDate = new Date(firstDay);
-        startDate.setDate(startDate.getDate() - firstDay.getDay());
+        // Se obtiene el rango completo de semanas para el calendario
+        const calendarStart = startWeek(monthStart, localization);
+        const calendarEnd = endWeek(monthEnd, localization);
 
-        const days = [];
-        for (let i = 0; i < 42; i++) {
-          const day = new Date(startDate);
-          day.setDate(startDate.getDate() + i);
-          days.push({
-            date: day,
-            isCurrentMonth: day.getMonth() === date.getMonth(),
-            isToday: day.toDateString() === new Date().toDateString(),
-            dayNumber: day.getDate(),
-          });
-        }
-        return days;
+        // Se obtiene el rango de dias de las fechas
+        const allDays = getIntervalDays({
+          start: calendarStart,
+          end: calendarEnd,
+        });
+
+        return allDays.map(objDate => ({
+          date: objDate,
+          isToday: isCurrentToday(objDate),
+          isWeekend: isWeekendDay(objDate),
+          isCurrentMonth: isCurrentMonth(objDate, date),
+        }));
       },
 
       // Obtener días de la semana localizados

@@ -31,8 +31,8 @@ export const CalendarViewProvider = ({ children, initialConfig = {} }) => {
   // Controlador de dates
   const newDate = new Date();
   const [currentDate, dateController] = useCalendarDate(newDate);
-  // Acciones del calendario mandandole el reducer
-  const actions = useCalendarActions(dispatch);
+  // Acciones del calendario mandandole el reducer (memoizadas)
+  const actions = useMemo(() => useCalendarActions(dispatch), [dispatch]);
 
   // Memoizicacion del calendario
   const calendarState = useMemo(() => {
