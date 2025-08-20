@@ -8,7 +8,7 @@ export const ToolbarSection = ({ section }) => {
   let children = [];
 
   // Se accede al contexto del calendario
-  const { currentDate, calendar, dateController, actions, localization } =
+  const { currentDate, calendar, dateController, actions } =
     useCalendarViewContext();
   // Se obtiene el helper para el formatter
   const { formatDate } = useCalendarHelpers();

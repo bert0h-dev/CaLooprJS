@@ -10,5 +10,9 @@ export const CalendarViews = () => {
   const LazyComponent = useLazyViews(calendar.activeView);
 
   // Retorna la vista
-  return <LazyComponent />;
+  return (
+    <main className='animate-fade-in'>
+      <LazyComponent />
+    </main>
+  );
 };
