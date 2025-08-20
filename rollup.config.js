@@ -31,7 +31,10 @@ export default {
   external: isProduction ? ['preact', 'preact/hooks', 'preact/compat'] : [],
   plugins: [
     alias({
-      entries: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+      entries: [
+        { find: '@', replacement: path.resolve(__dirname, 'src') },
+        { find: '@loopr', replacement: path.resolve(__dirname, 'src/loopr') },
+      ],
     }),
     resolve({
       browser: true,
