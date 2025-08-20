@@ -133,11 +133,11 @@ html[data-theme='dark'] {
   overflow: hidden;
 }
 
+/* Estilos del header del container */
 .container-header {
-  padding: var(--spacing-md);
+  padding: var(--space-3);
 }
 
-/* Toolbar Section */
 .toolbar {
   position: relative;
 }
@@ -157,4 +157,19 @@ html[data-theme='dark'] {
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   text-shadow: var(--color-shadow-sm);
+}
+
+/* Estilos del view month */
+.view-month {
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.view-month-header-name {
+  color: var(--color-text-primary);
+  cursor: default;
+  user-select: none;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
 }
